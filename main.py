@@ -3,6 +3,7 @@ import cv2
 
 Path = "images\WhatsApp Image 2022-12-06 at 11.07.36 (2).jpeg"
 
+
 def image_filter(path):
     while True :
         img = cv2.imread(path)
