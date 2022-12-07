@@ -10,6 +10,9 @@ def image_filter(path):
     kernel = np.array([[0, -1, 0],
                    [-1, 5,-1],
                    [0, -1, 0]])
+    kernel2 = np.array([[-1, -1, -1],
+                   [-1, 9,-1],
+                   [-1, -1, -1]])
     while True :
         img = cv2.imread(path)
         img = contrast.contrast_new(img,1.5)
@@ -17,8 +20,9 @@ def image_filter(path):
         img = cv2.filter2D(src=img, ddepth=-10, kernel=kernel)
         img = cv2.bitwise_not(img)
         img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-        img = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
-        
+        #img = img = cv2.fastNlMeansDenoising(img)
+        img = cv2.pyrUp(img)
+        #img = cv2.filter2D(img, -1 ,kernel2)
         cv2.imshow('results',img)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
