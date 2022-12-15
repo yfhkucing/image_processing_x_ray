@@ -3,8 +3,14 @@ import numpy as np
 import contrast 
 import clache
 
-Path = "images\WhatsApp Image 2022-12-06 at 11.07.36 (2).jpeg"
+#Path = "images\WhatsApp Image 2022-12-06 at 11.07.36 (2).jpeg"
 
+frameWidth = 640
+frameHeight = 480
+cap = cv2.VideoCapture(0)
+cap.set(3, frameWidth)
+cap.set(4, frameHeight)
+cap.set(10, 150)
 
 def image_filter(path):
     kernel = np.array([[0, -1, 0],
@@ -14,7 +20,8 @@ def image_filter(path):
                    [-1, 9,-1],
                    [-1, -1, -1]])
     while True :
-        img = cv2.imread(path)
+        #img = cv2.imread(path)
+        img = path
         img = contrast.contrast_new(img,1.5)
         img = cv2.fastNlMeansDenoisingColored(img,None,10,10,7,21)
         img = cv2.filter2D(src=img, ddepth=-10, kernel=kernel)
@@ -27,4 +34,4 @@ def image_filter(path):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 if __name__ == "__main__":
-    image_filter(Path)
+    image_filter(cap)
